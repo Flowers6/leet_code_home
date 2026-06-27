@@ -1,7 +1,6 @@
 package medium;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author : Flowers6
@@ -13,12 +12,37 @@ import java.util.Map;
 public class LongestConsecutiveSequence {
 
     public static void main(String[] args) {
-        int[] nums1 = new int[] {100,4,200,1,3,2};
-        int[] nums2 = new int[] {0,3,7,2,5,8,4,6,0,1};
-        int[] nums3 = new int[] {1,0,1,2};
-        System.out.println(func1(nums1));
-        System.out.println(func1(nums2));
-        System.out.println(func1(nums3));
+        int[] nums1 = {100,4,200,1,3,2};
+        int[] nums2 = {0,3,7,2,5,8,4,6,0,1};
+        int[] nums3 = {1,0,1,2};
+        System.out.println(func2(nums1));
+        System.out.println(func2(nums2));
+        System.out.println(func2(nums3));
+    }
+
+    private static int func2(int[] nums) {
+        int res = 0;
+        if (nums.length == 0) {
+            return res;
+        }
+        Set<Integer> hashSet = new HashSet<>(nums.length * 2);
+        for (int num : nums) {
+            hashSet.add(num);
+        }
+        for (int num : hashSet) {
+            hashSet.add(num);
+            if (hashSet.contains(num - 1)) {
+                continue;
+            }
+            // 如果左侧没有元素，则开始计算连续长度
+            int curr = num;
+            int length = 0;
+            while (hashSet.contains(curr++)) {
+                length++;
+            }
+            res = Math.max(res, length);
+        }
+        return res;
     }
 
     private static int func1(int[] nums) {
