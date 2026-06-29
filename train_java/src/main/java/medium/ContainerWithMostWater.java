@@ -16,28 +16,21 @@ public class ContainerWithMostWater {
         System.out.println(func1(nums2));
     }
 
-    private static int func1(int[] height) {
-        // 算出四个坐标点间的最大面积
-        // 数组 索引代表 x 轴, 值代表 y 轴
-        // 面积为 min(y1, y2) * math.abs(x1 - x2)
-
-        // 双指针 方法
-        // 慢指针 为 x1 y1 x2 y2
-        // 快指针 为 x3 y3
-        // 当最大面积发生变化时 进行指针移位
-        int res = 0;
-        int i = 0;
-        int j = height.length - 1;
-        while (i < j) {
-            int area = (j - i) * Math.min(height[i], height[j]);
-            res = Math.max(res, area);
-            if (height[i] < height[j]) {
-                i++;
+    private static int func1(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        int maxArea = 0;
+        while (start < end) {
+            maxArea = Math.max(maxArea, Math.min(nums[start], nums[end]) * (end - start));
+            // 如果 start 高度低于 end 则 start 后移
+            if (nums[start] < nums[end]) {
+                start++;
             } else {
-                j--;
+                // 如果 start 高度不低于 end 则 end 前移
+                end--;
             }
         }
-        return res;
+        return maxArea;
     }
 
 }
