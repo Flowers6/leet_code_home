@@ -1,6 +1,7 @@
 package medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,11 +58,62 @@ public class SpiralMatrix {
         return res;
     }
 
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+
+        // 定好四个边界 右->下->左->上
+        int rightLimit = n - 1;
+        int leftLimit = 0;
+        int downLimit = n - 1;
+        int upLimit = 0;
+
+        int count = 1;
+
+        // 循环
+        while (leftLimit <= rightLimit && upLimit <= downLimit) {
+
+            // 从左往右 行固定
+            if (leftLimit <= rightLimit) {
+                for (int i = leftLimit; i <= rightLimit; i++) {
+                    matrix[upLimit][i] = count++;
+                }
+                upLimit++;
+            }
+
+            // 从上往下 列固定
+            if (upLimit <= downLimit) {
+            for (int i = upLimit; i <= downLimit; i++) {
+                matrix[i][rightLimit] = count++;
+            }
+            rightLimit--;
+            }
+
+            // 从右往左 行固定
+            if (upLimit <= downLimit) {
+                for (int i = rightLimit; i >= leftLimit; i--) {
+                    matrix[downLimit][i] = count++;
+                }
+                downLimit--;
+            }
+
+            // 从下往上 列固定
+            if (leftLimit <= rightLimit) {
+                for (int i = downLimit; i >= upLimit; i--) {
+                    matrix[i][leftLimit] = count++;
+                }
+                leftLimit++;
+            }
+        }
+
+        return matrix;
+    }
+
     public static void main(String[] args) {
         int[][] test = {{1,2,3},{4,5,6},{7,8,9}};
         int[][] test2 = {{1, 2, 3, 4}, {5, 6, 7, 8},{9,10,11,12}};
         SpiralMatrix sm = new SpiralMatrix();
         System.out.println(sm.spiralOrder(test2));
+        System.out.println(Arrays.toString(sm.generateMatrix(3)));
     }
 
 }
