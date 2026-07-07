@@ -1,5 +1,8 @@
 package medium;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author : Flowers6
  * @version : v1.0
@@ -41,6 +44,29 @@ public class CopyListWithRandomPointer {
         }
 
         return res;
+    }
+
+    public Node func2(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Map<Node, Node> nodeMap = new HashMap<>();
+        Node curr = head;
+        while (curr != null) {
+            Node copy = new Node(curr.val);
+            nodeMap.put(curr, copy);
+            curr = curr.next;
+        }
+
+        curr = head;
+        while (curr != null) {
+            Node copy = nodeMap.get(curr);
+            copy.next = nodeMap.get(curr.next);
+            copy.random = nodeMap.get(curr.random);
+            curr = curr.next;
+        }
+
+        return nodeMap.get(head);
     }
 
     public static class Node {
