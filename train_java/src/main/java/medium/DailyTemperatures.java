@@ -1,8 +1,6 @@
 package medium;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author : Flowers6
@@ -49,6 +47,49 @@ public class DailyTemperatures {
     public static class Temperature {
         int val;
         int index;
+    }
+
+    public int[] fun2(int[] temperatures) {
+        // key: temperature index: greater temperature index
+        Map<Integer, Integer> greaterTemperatureMap = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+
+        // iterate all temperatures to collect greaterTemperatureMap
+        for (int i = temperatures.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && temperatures[stack.peek()] <= temperatures[i]) {
+                stack.pop();
+            }
+            greaterTemperatureMap.put(i, stack.isEmpty() ? null : stack.peek());
+            stack.push(i);
+        }
+
+        int[] res = new int[temperatures.length];
+        for (int currentIndex = 0; currentIndex < temperatures.length; currentIndex++) {
+
+            Integer greaterIndex = greaterTemperatureMap.get(currentIndex);
+
+            if (greaterIndex == null) {
+                res[currentIndex] = 0;
+                continue;
+            }
+
+            res[currentIndex] = greaterIndex - currentIndex;
+        }
+
+        return res;
+    }
+
+    public int[] fun3(int[] temperatures) {
+        Deque<Integer> stack = new LinkedList<>();
+        int[] res = new int[temperatures.length];
+        for (int i = 0; i < temperatures.length; i++) {
+            while (!stack.isEmpty() && temperatures[stack.peek()] <= temperatures[i]) {
+                Integer preIndex = stack.pop();
+                res[preIndex] = i - preIndex;
+            }
+            stack.push(i);
+        }
+        return res;
     }
 
 }
