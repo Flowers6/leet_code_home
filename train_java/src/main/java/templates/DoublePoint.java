@@ -145,4 +145,21 @@ public class DoublePoint {
 
         return res;
     }
+
+    /**
+     * 回文串判断
+     * @param s
+     * @return
+     */
+    boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
 }
