@@ -3,7 +3,7 @@ package templates;
 /**
  * @author : Flowers6
  * @version : v1.0
- * @description :
+ * @description : 差分数组模板
  * @date : 2026/7/11
  * @time : 18:06
  */
